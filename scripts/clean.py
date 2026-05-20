@@ -19,7 +19,10 @@ df = df.dropna()
 df = df[df["event_type"].isin(VALID_EVENT_TYPES)]
 
 # Drop rows with non-positive duration_seconds
+df["duration_seconds"] = pd.to_numeric(df["duration_seconds"], errors="coerce")
+df = df.dropna(subset=["duration_seconds"])
 df = df[df["duration_seconds"] > 0]
+df["duration_seconds"] = df["duration_seconds"].astype(int)
 
 # Normalize timestamp
 df["timestamp"] = df["timestamp"].apply(normalize_timestamp)
