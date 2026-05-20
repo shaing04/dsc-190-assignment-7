@@ -25,5 +25,8 @@ df = df[df["duration_seconds"] > 0]
 df["timestamp"] = df["timestamp"].apply(normalize_timestamp)
 df = df.dropna(subset=["timestamp"])
 
+import os
+os.makedirs("data/clean", exist_ok=True)
+
 df.to_csv("data/clean/events.csv", index=False)
 print(f"Clean: {len(df)} rows written to data/clean/events.csv")
